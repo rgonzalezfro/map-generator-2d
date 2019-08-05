@@ -1,13 +1,13 @@
 ﻿namespace MapGenerator
 {
-    internal class MapProbabilityTile
+    internal class ProbabilityTile
     {
         public int Index { get; set; }
-        public MapPosition2D Pos { get; set; }
+        public Position2D Pos { get; set; }
         public char Content { get; set; }
         public double Probability { get; set; }
 
-        public MapProbabilityTile(int index, MapPosition2D pos, char content, double probability = 0)
+        public ProbabilityTile(int index, Position2D pos, char content, double probability = 0)
         {
             Index = index;
             Pos = pos;

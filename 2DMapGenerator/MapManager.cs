@@ -15,7 +15,7 @@ namespace MapGenerator
 
         private Random _random = new Random();
         private char[,] _grid;
-        private MapPosition2D[] _creationPositionArray;
+        private Position2D[] _creationPositionArray;
 
         #endregion
 
@@ -102,7 +102,7 @@ namespace MapGenerator
         /// <param name="quantity"></param>
         private void GenerateCreationPoints(int quantity)
         {
-            _creationPositionArray = new MapPosition2D[quantity];
+            _creationPositionArray = new Position2D[quantity];
             for (int creationPoint = 0; creationPoint < quantity; creationPoint++)
             {
                 var xCoord = _random.Next(HorizontalSize);
@@ -111,7 +111,7 @@ namespace MapGenerator
                 {
                     _grid[xCoord, yCoord] = 'X';
                 }
-                _creationPositionArray[creationPoint] = new MapPosition2D(xCoord, yCoord);
+                _creationPositionArray[creationPoint] = new Position2D(xCoord, yCoord);
             }
         }
 
@@ -142,7 +142,7 @@ namespace MapGenerator
         /// </summary>
         /// <param name="surroundingTiles"></param>
         /// <returns></returns>
-        private IEnumerable<MapProbabilityTile> GetSurroundingMovingProbability(IEnumerable<MapProbabilityTile> surroundingTiles)
+        private IEnumerable<ProbabilityTile> GetSurroundingMovingProbability(IEnumerable<ProbabilityTile> surroundingTiles)
         {
             foreach (var tile in surroundingTiles)
             {
@@ -174,13 +174,13 @@ namespace MapGenerator
         /// <param name="xCoord"></param>
         /// <param name="yCoord"></param>
         /// <param name="tileIndex"></param>
-        private void AddSurroundingTile(List<MapProbabilityTile> probabilityTiles, int xCoord, int yCoord, int tileIndex)
+        private void AddSurroundingTile(List<ProbabilityTile> probabilityTiles, int xCoord, int yCoord, int tileIndex)
         {
             var inBoundX = xCoord >= 0 && xCoord < HorizontalSize;
             var inBoundY = yCoord >= 0 && yCoord < VerticalSize;
             if (inBoundX && inBoundY)
             {
-                var tile = new MapProbabilityTile(tileIndex, new MapPosition2D(xCoord, yCoord), _grid[xCoord, yCoord]);
+                var tile = new ProbabilityTile(tileIndex, new Position2D(xCoord, yCoord), _grid[xCoord, yCoord]);
                 probabilityTiles.Add(tile);
             }
         }
@@ -190,9 +190,9 @@ namespace MapGenerator
         /// </summary>
         /// <param name="creationPosition"></param>
         /// <returns></returns>
-        private IEnumerable<MapProbabilityTile> GetSurroundingTiles(MapPosition2D creationPosition)
+        private IEnumerable<ProbabilityTile> GetSurroundingTiles(Position2D creationPosition)
         {
-            var surroundingTiles = new List<MapProbabilityTile>();
+            var surroundingTiles = new List<ProbabilityTile>();
             var surroundIndex = 0;
 
             int xSearchIndex = creationPosition.x - 1;
